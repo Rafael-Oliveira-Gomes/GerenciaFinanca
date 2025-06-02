@@ -1,0 +1,71 @@
+
+<div class="dashboard-container">
+  <h1>Dashboard Financeiro - Studio Gump</h1>
+  
+  <div class="yearly-summary">
+    <h2>Resumo Anual {{ currentYear }}</h2>
+    <div class="summary-cards">
+      <div class="card income">
+        <h3>Receita Total</h3>
+        <p class="amount">{{ getTotalYearIncome() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+      <div class="card expenses">
+        <h3>Gastos Total</h3>
+        <p class="amount">{{ getTotalYearExpenses() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+      <div class="card balance" [class.negative]="getTotalYearBalance() < 0">
+        <h3>Saldo Total</h3>
+        <p class="amount">{{ getTotalYearBalance() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="monthly-breakdown">
+    <h2>Análise por Mês</h2>
+    <div class="months-grid">
+      <div *ngFor="let month of monthlyData; let i = index" class="month-card">
+        <h3>{{ months[month.month - 1] }}</h3>
+        <div class="month-data">
+          <div class="data-row">
+            <span>Receita:</span>
+            <span class="income">{{ month.income | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+          </div>
+          <div class="data-row">
+            <span>Gastos Fixos:</span>
+            <span class="expense">{{ month.fixedExpenses | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+          </div>
+          <div class="data-row">
+            <span>Gastos Variáveis:</span>
+            <span class="expense">{{ month.variableExpenses | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+          </div>
+          <div class="data-row">
+            <span>Gastos Cartão:</span>
+            <span class="expense">{{ month.cardExpenses | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+          </div>
+          <div class="data-row total">
+            <span>Saldo:</span>
+            <span [class.negative]="month.balance < 0">{{ month.balance | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+          </div>
+        </div>
+        
+        <div class="percentage-indicator">
+          <div class="percentage-bar">
+            <div 
+              class="percentage-fill" 
+              [style.width.%]="getExpensePercentage(month)"
+              [style.background-color]="getPercentageColor(getExpensePercentage(month))">
+            </div>
+          </div>
+          <div class="percentage-info">
+            <span class="percentage-value" [style.color]="getPercentageColor(getExpensePercentage(month))">
+              {{ getExpensePercentage(month).toFixed(1) }}%
+            </span>
+            <span class="percentage-status" [style.color]="getPercentageColor(getExpensePercentage(month))">
+              {{ getPercentageStatus(getExpensePercentage(month)) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

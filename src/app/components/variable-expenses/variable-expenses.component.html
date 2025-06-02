@@ -1,0 +1,103 @@
+
+<div class="variable-expenses-container">
+  <h1>Despesas Variáveis - Studio Gump</h1>
+  
+  <div class="summary-section">
+    <div class="summary-card">
+      <h3>Total de Despesas Variáveis</h3>
+      <p class="total-amount">{{ getTotalExpenses() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+    </div>
+  </div>
+
+  <div class="add-expense-section">
+    <h2>Adicionar Despesa Variável</h2>
+    <form (ngSubmit)="addExpense()" class="expense-form">
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <input 
+          type="text" 
+          id="description" 
+          [(ngModel)]="newExpense.description" 
+          name="description"
+          placeholder="Ex: Material extra, Combustível"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="amount">Valor:</label>
+        <input 
+          type="number" 
+          id="amount" 
+          [(ngModel)]="newExpense.amount" 
+          name="amount"
+          min="0" 
+          step="0.01"
+          placeholder="0,00"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Categoria:</label>
+        <input 
+          type="text" 
+          id="category" 
+          [(ngModel)]="newExpense.category" 
+          name="category"
+          placeholder="Ex: Material, Transporte, etc.">
+      </div>
+      
+      <div class="form-group">
+        <label for="date">Data:</label>
+        <input 
+          type="date" 
+          id="date" 
+          [(ngModel)]="newExpense.date" 
+          name="date">
+      </div>
+      
+      <button type="submit" class="btn-add">Adicionar Despesa</button>
+    </form>
+  </div>
+
+  <div class="expenses-by-month">
+    <h2>Despesas por Mês</h2>
+    <div *ngFor="let month of getExpensesByMonth() | keyvalue" class="month-section">
+      <div class="month-header">
+        <h3>{{ month.key }}</h3>
+        <span class="month-total">{{ getMonthTotal(month.value) | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+      </div>
+      <div class="month-expenses">
+        <div *ngFor="let expense of month.value" class="expense-item">
+          <div class="expense-info">
+            <span class="expense-description">{{ expense.description }}</span>
+            <span class="expense-category">{{ expense.category }}</span>
+            <span class="expense-date">{{ expense.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <span class="expense-amount">{{ expense.amount | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="expenses-list">
+    <h2>Todas as Despesas Variáveis</h2>
+    <div class="expenses-table">
+      <div class="table-header">
+        <div>Data</div>
+        <div>Descrição</div>
+        <div>Categoria</div>
+        <div>Valor</div>
+      </div>
+      <div *ngFor="let expense of variableExpenses" class="table-row">
+        <div>{{ expense.date | date:'dd/MM/yyyy' }}</div>
+        <div>{{ expense.description }}</div>
+        <div>{{ expense.category }}</div>
+        <div class="amount">{{ expense.amount | currency:'BRL':'symbol':'1.2-2':'pt' }}</div>
+      </div>
+    </div>
+    
+    <div *ngIf="variableExpenses.length === 0" class="no-expenses">
+      <p>Nenhuma despesa variável cadastrada.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,328 @@
+
+.card-expenses-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.summary-section {
+  margin-bottom: 40px;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  border-left: 4px solid #6f42c1;
+}
+
+.summary-card.installments {
+  border-left-color: #20c997;
+}
+
+.summary-card h3 {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 18px;
+}
+
+.total-amount {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+  color: #6f42c1;
+}
+
+.summary-card.installments .total-amount {
+  color: #20c997;
+}
+
+.add-expense-section {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+.add-expense-section h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.expense-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form-group input.readonly {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.btn-add {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  height: fit-content;
+}
+
+.btn-add:hover {
+  background-color: #5a359b;
+}
+
+.expenses-by-card {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+.expenses-by-card h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.card-section {
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #6f42c1;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.card-total {
+  font-weight: bold;
+  font-size: 18px;
+  color: #6f42c1;
+}
+
+.card-expenses {
+  padding: 0;
+}
+
+.expense-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-item:hover {
+  background-color: #f8f9fa;
+}
+
+.expense-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expense-description {
+  font-weight: 500;
+  color: #333;
+}
+
+.expense-details {
+  font-size: 12px;
+  color: #20c997;
+  font-weight: 500;
+}
+
+.expense-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.expense-amounts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.expense-amounts .total-amount {
+  font-weight: bold;
+  color: #6f42c1;
+  font-size: 16px;
+}
+
+.installment-amount {
+  font-size: 12px;
+  color: #20c997;
+  font-weight: 500;
+}
+
+.expenses-list {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.expenses-list h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.expenses-table {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 100px 2fr 1fr 80px 120px 120px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 100px 2fr 1fr 80px 120px 120px;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  border-left: 4px solid #6f42c1;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.amount {
+  font-weight: bold;
+}
+
+.amount.total {
+  color: #6f42c1;
+}
+
+.amount.installment {
+  color: #20c997;
+}
+
+.no-expenses {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .card-expenses-container {
+    padding: 15px;
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .expense-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .expense-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .expense-amounts {
+    align-items: flex-start;
+  }
+  
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .table-header {
+    display: none;
+  }
+  
+  .table-row {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+}

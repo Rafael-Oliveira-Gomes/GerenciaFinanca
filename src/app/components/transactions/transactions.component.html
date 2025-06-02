@@ -1,0 +1,107 @@
+
+<div class="transactions-container">
+  <h1>Movimentação de Transações - Studio Gump</h1>
+  
+  <div class="summary-section">
+    <div class="summary-cards">
+      <div class="summary-card income">
+        <h3>Total de Receitas</h3>
+        <p>{{ getTotalIncome() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+      <div class="summary-card expenses">
+        <h3>Total de Gastos</h3>
+        <p>{{ getTotalExpenses() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+      <div class="summary-card balance" [class.negative]="getBalance() < 0">
+        <h3>Saldo Total</h3>
+        <p>{{ getBalance() | currency:'BRL':'symbol':'1.2-2':'pt' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-transaction-section">
+    <h2>Adicionar Nova Transação</h2>
+    <form (ngSubmit)="addTransaction()" class="transaction-form">
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <input 
+          type="text" 
+          id="description" 
+          [(ngModel)]="newTransaction.description" 
+          name="description"
+          placeholder="Ex: Tatuagem cliente João"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="amount">Valor:</label>
+        <input 
+          type="number" 
+          id="amount" 
+          [(ngModel)]="newTransaction.amount" 
+          name="amount"
+          min="0" 
+          step="0.01"
+          placeholder="0,00"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Tipo:</label>
+        <select id="type" [(ngModel)]="newTransaction.type" name="type">
+          <option value="income">Receita</option>
+          <option value="expense">Despesa</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Categoria:</label>
+        <input 
+          type="text" 
+          id="category" 
+          [(ngModel)]="newTransaction.category" 
+          name="category"
+          placeholder="Ex: Tatuagem, Material, etc.">
+      </div>
+      
+      <div class="form-group">
+        <label for="date">Data:</label>
+        <input 
+          type="date" 
+          id="date" 
+          [(ngModel)]="newTransaction.date" 
+          name="date">
+      </div>
+      
+      <button type="submit" class="btn-add">Adicionar Transação</button>
+    </form>
+  </div>
+
+  <div class="transactions-list">
+    <h2>Histórico de Transações</h2>
+    <div class="transactions-table">
+      <div class="table-header">
+        <div>Data</div>
+        <div>Descrição</div>
+        <div>Categoria</div>
+        <div>Tipo</div>
+        <div>Valor</div>
+      </div>
+      <div 
+        *ngFor="let transaction of transactions" 
+        class="table-row"
+        [class.income]="transaction.type === 'income'"
+        [class.expense]="transaction.type === 'expense'">
+        <div>{{ transaction.date | date:'dd/MM/yyyy' }}</div>
+        <div>{{ transaction.description }}</div>
+        <div>{{ transaction.category }}</div>
+        <div>{{ transaction.type === 'income' ? 'Receita' : 'Despesa' }}</div>
+        <div class="amount">{{ transaction.amount | currency:'BRL':'symbol':'1.2-2':'pt' }}</div>
+      </div>
+    </div>
+    
+    <div *ngIf="transactions.length === 0" class="no-transactions">
+      <p>Nenhuma transação encontrada.</p>
+    </div>
+  </div>
+</div>
