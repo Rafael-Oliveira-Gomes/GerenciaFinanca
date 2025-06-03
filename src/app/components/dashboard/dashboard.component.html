@@ -10,7 +10,7 @@
   </div>
   
   <div class="yearly-summary">
-    <h2>Resumo Anual {{ selectedYear }}</h2>
+    <h2 style="margin-bottom: 15px; color: #ffffff;">Resumo Anual {{ selectedYear }}</h2>
     <div class="summary-cards">
       <div class="card income">
         <h3>Receita Total</h3>
@@ -28,7 +28,7 @@
   </div>
 
   <div class="monthly-breakdown">
-    <h2>Análise por Mês</h2>
+    <h2 style="margin-bottom: 15px; margin-top: 20px; color: #ffffff;">Análise por Mês</h2>
     <div class="months-grid">
       <div *ngFor="let month of monthlyData; let i = index" class="month-card">
         <h3>{{ months[month.month - 1] }}</h3>
