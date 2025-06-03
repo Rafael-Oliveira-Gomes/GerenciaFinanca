@@ -8,3 +8,28 @@ channel = "stable-24_05"
 [[ports]]
 localPort = 4200
 externalPort = 80
+
+[workflows]
+runButton = "Full Development"
+
+[[workflows.workflow]]
+name = "Start API Server"
+author = 43282202
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node api-server.js"
+
+[[workflows.workflow]]
+name = "Full Development"
+author = 43282202
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node api-server.js"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run start"
