@@ -49,9 +49,8 @@
 }
 
 .main-content {
-  min-height: calc(100vh - 60px);
   background-color: #1a1a1a;
-  padding: 10px 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
