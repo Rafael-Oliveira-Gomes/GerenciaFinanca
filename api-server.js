@@ -28,35 +28,49 @@ const cardExpenses = [
   { id: 2, description: 'Agulhas', amount: 80, date: new Date('2024-01-08'), cardName: 'Mastercard', installments: 1 }
 ];
 
-// Generate monthly data
+// Generate monthly data for multiple years
 const monthlyData = [];
-for (let month = 1; month <= 12; month++) {
-  const monthIncome = transactions
-    .filter(t => t.type === 'income' && new Date(t.date).getMonth() + 1 === month)
-    .reduce((sum, t) => sum + t.amount, 0) + (month === 1 ? 1300 : Math.floor(Math.random() * 2000) + 500);
-  
-  const monthFixedExpenses = fixedExpenses
-    .filter(e => e.month === month)
-    .reduce((sum, e) => sum + e.amount, 0);
-  
-  const monthVariableExpenses = variableExpenses
-    .filter(e => new Date(e.date).getMonth() + 1 === month)
-    .reduce((sum, e) => sum + e.amount, 0) + (month === 1 ? 0 : Math.floor(Math.random() * 500));
-  
-  const monthCardExpenses = cardExpenses
-    .filter(e => new Date(e.date).getMonth() + 1 === month)
-    .reduce((sum, e) => sum + e.amount, 0) + (month === 1 ? 0 : Math.floor(Math.random() * 300));
+const currentYear = new Date().getFullYear();
+const years = [];
 
-  monthlyData.push({
-    month,
-    year: 2024,
-    income: monthIncome,
-    fixedExpenses: monthFixedExpenses,
-    variableExpenses: monthVariableExpenses,
-    cardExpenses: monthCardExpenses,
-    balance: monthIncome - (monthFixedExpenses + monthVariableExpenses + monthCardExpenses)
-  });
+// Generate for 5 years before current year to 2 years after
+for (let year = currentYear - 5; year <= currentYear + 2; year++) {
+  years.push(year);
 }
+
+years.forEach(year => {
+  for (let month = 1; month <= 12; month++) {
+    // Base income varies by year (simulate business growth/decline)
+    const yearMultiplier = year === 2024 ? 1 : (year < 2024 ? 0.8 + (year - 2019) * 0.05 : 1.1);
+    const baseIncome = year === 2024 && month === 1 ? 1300 : Math.floor((Math.random() * 2000 + 500) * yearMultiplier);
+    
+    const monthIncome = transactions
+      .filter(t => t.type === 'income' && new Date(t.date).getMonth() + 1 === month && new Date(t.date).getFullYear() === year)
+      .reduce((sum, t) => sum + t.amount, 0) + baseIncome;
+    
+    const monthFixedExpenses = fixedExpenses
+      .filter(e => e.month === month && e.year === year)
+      .reduce((sum, e) => sum + e.amount, 0) + (year === 2024 ? 0 : Math.floor(Math.random() * 800 + 200));
+    
+    const monthVariableExpenses = variableExpenses
+      .filter(e => new Date(e.date).getMonth() + 1 === month && new Date(e.date).getFullYear() === year)
+      .reduce((sum, e) => sum + e.amount, 0) + (year === 2024 && month === 1 ? 0 : Math.floor(Math.random() * 500 * yearMultiplier));
+    
+    const monthCardExpenses = cardExpenses
+      .filter(e => new Date(e.date).getMonth() + 1 === month && new Date(e.date).getFullYear() === year)
+      .reduce((sum, e) => sum + e.amount, 0) + (year === 2024 && month === 1 ? 0 : Math.floor(Math.random() * 300 * yearMultiplier));
+
+    monthlyData.push({
+      month,
+      year,
+      income: monthIncome,
+      fixedExpenses: monthFixedExpenses,
+      variableExpenses: monthVariableExpenses,
+      cardExpenses: monthCardExpenses,
+      balance: monthIncome - (monthFixedExpenses + monthVariableExpenses + monthCardExpenses)
+    });
+  }
+});
 
 // Routes
 app.get('/api/transactions', (req, res) => {

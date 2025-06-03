@@ -1,25 +1,33 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { FinancialService } from '../../services/financial.service';
 import { MonthlyFinancialData } from '../../models/transaction.model';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
   monthlyData: MonthlyFinancialData[] = [];
-  currentYear = new Date().getFullYear();
+  selectedYear = new Date().getFullYear();
+  availableYears: number[] = [];
   months = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
   ];
 
-  constructor(private financialService: FinancialService) {}
+  constructor(private financialService: FinancialService) {
+    // Gerar anos disponíveis (5 anos anteriores ao atual e 2 anos futuros)
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear - 5; year <= currentYear + 2; year++) {
+      this.availableYears.push(year);
+    }
+  }
 
   ngOnInit() {
     this.loadDashboardData();
@@ -27,8 +35,12 @@ export class DashboardComponent implements OnInit {
 
   loadDashboardData() {
     this.financialService.getMonthlyData().subscribe(data => {
-      this.monthlyData = data;
+      this.monthlyData = data.filter(item => item.year === this.selectedYear);
     });
+  }
+
+  onYearChange() {
+    this.loadDashboardData();
   }
 
   getExpensePercentage(monthData: MonthlyFinancialData): number {
