@@ -8,17 +8,17 @@ import { Transaction, FixedExpense, VariableExpense, CardExpense, MonthlyFinanci
   providedIn: 'root'
 })
 export class FinancialService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://localhost:7280/api/v1';
 
   constructor(private http: HttpClient) { }
 
   // Transactions
   getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(`${this.apiUrl}/transactions`);
+    return this.http.get<Transaction[]>(`${this.apiUrl}/transaction`);
   }
 
   addTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.apiUrl}/transactions`, transaction);
+    return this.http.post<Transaction>(`${this.apiUrl}/transaction`, transaction);
   }
 
   // Fixed Expenses
